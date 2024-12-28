@@ -95,10 +95,32 @@ userRouter.post("/signin", async (req, res) => {
 });
 
 // fetch all user specific todos
-userRouter.get("/fetchtodos", (req, res) => {
-  return res.status(200).json({
-    message: "All Todos fetched successfully",
-  });
+userRouter.get("/fetchtodos", async (req, res) => {
+  const { userID } = req.body;
+  if (!userID) {
+    return res.json(400).json({
+      message: "All fields are mandatory",
+    });
+  }
+
+  try {
+    const findUser = await userModel.findOne({ userID });
+    if (!findUser) {
+      return res.status(400).json({
+        message: "Invalid user",
+      });
+    }
+
+    return res.status(200).json({
+      message: "All Todos fetched successfully",
+      todos: findUser.todos,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server error",
+    });
+  }
 });
 
 // create a todo
