@@ -194,7 +194,6 @@ userRouter.delete("/deletetodo", async (req, res) => {
         message: "Todo not found",
       });
     }
-
     findTodo.todos.splice(todoIndex, 1);
     await findTodo.save();
     return res.status(200).json({
@@ -209,10 +208,56 @@ userRouter.delete("/deletetodo", async (req, res) => {
 });
 
 // update existing todo
-userRouter.put("/updatetodo", (req, res) => {
-  return res.status(200).json({
-    message: "Todo updated successfully",
-  });
+userRouter.put("/updatetodo", async (req, res) => {
+  const { title, description, isCompleted, priority, userID, todoID } =
+    req.body;
+
+  if (
+    !title ||
+    !description ||
+    isCompleted == undefined ||
+    !priority ||
+    !userID ||
+    !todoID
+  ) {
+    return res.status(400).json({
+      message: "All fields are mandatory",
+    });
+  }
+
+  try {
+    const findTodo = await userModel.findOne({ userID });
+    if (findTodo.todos.length == 0) {
+      return res.status(400).json({
+        message: "No todo found || Please Add Todos",
+      });
+    }
+    const todoIndex = findTodo.todos.findIndex((todo) => todo._id == todoID);
+    console.log("Todo Index", todoIndex);
+    if (todoIndex === -1) {
+      return res.status(404).json({
+        message: "Todo not found",
+      });
+    }
+
+    if (title) findTodo.todos[todoIndex].title = title;
+    if (description) findTodo.todos[todoIndex].description = description;
+    if (isCompleted !== undefined)
+      findTodo.todos[todoIndex].isCompleted = isCompleted;
+    if (priority) findTodo.todos[todoIndex].priority = priority;
+
+    await findTodo.save();
+
+    console.log(findTodo.todos[todoIndex]);
+    return res.status(200).json({
+      message: "Todo updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server error",
+    });
+  }
 });
 
 module.exports = {
