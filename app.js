@@ -3,8 +3,10 @@ require("dotenv").config();
 const app = express();
 const mongoose = require("mongoose");
 app.use(express.json());
+const { userRouter } = require("./routes/userRoutes");
 
 const PORT_NUMBER = 3000;
+app.use("/api/v1/user", userRouter);
 
 async function main() {
   try {
