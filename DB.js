@@ -7,11 +7,7 @@ const todoSchema = new Schema({
   title: String,
   description: String,
   isCompleted: Boolean,
-  priority: {
-    type: String,
-    enum: ["Low", "Medium", "High"],
-    default: "Medium",
-  },
+  priority: String,
 });
 
 const userSchema = new Schema({

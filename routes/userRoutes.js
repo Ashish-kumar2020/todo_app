@@ -102,10 +102,49 @@ userRouter.get("/fetchtodos", (req, res) => {
 });
 
 // create a todo
-userRouter.post("/createtodo", (req, res) => {
-  return res.status(200).json({
-    message: "Todo created successfully",
-  });
+userRouter.post("/createtodo", async (req, res) => {
+  const { title, description, isCompleted, priority, userID } = req.body;
+
+  if (
+    !title ||
+    !description ||
+    isCompleted == undefined ||
+    !priority ||
+    !userID
+  ) {
+    return res.status(400).json({
+      message: "All fields are mandatory",
+    });
+  }
+
+  try {
+    const existingUser = await userModel.findOne({ userID });
+
+    if (!existingUser) {
+      return res.status(400).json({
+        message: "Invalid user",
+      });
+    }
+
+    const todoDetails = {
+      title,
+      description,
+      isCompleted,
+      priority,
+    };
+    existingUser.todos.push(todoDetails);
+    await existingUser.save();
+    console.log(existingUser.todos);
+
+    return res.status(200).json({
+      message: "Todo created successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while adding the todo",
+      error: error.message,
+    });
+  }
 });
 
 // delete a todo
