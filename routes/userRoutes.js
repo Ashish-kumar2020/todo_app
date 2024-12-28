@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { userModel } = require("../DB");
 const { Types } = require("mongoose");
-
+const jwt = require("jsonwebtoken");
 const userRouter = Router();
 
 // create a new user
@@ -47,10 +47,51 @@ userRouter.post("/signup", async (req, res) => {
 });
 
 // signin user
-userRouter.post("/signin", (req, res) => {
-  return res.status(200).json({
-    message: "User signed in successfully",
-  });
+userRouter.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "All fields are mandatory",
+    });
+  }
+
+  try {
+    const existingUser = await userModel.findOne({ email });
+    if (!existingUser) {
+      return res.status(400).json({
+        message: "User not found| please signup",
+      });
+    }
+
+    if (existingUser.password !== password) {
+      return res.status(400).json({
+        message: "Invalid credentials",
+      });
+    }
+    const token = jwt.sign(
+      {
+        user: existingUser.email,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    return res.status(200).json({
+      message: "User signed in successfully",
+      userDetails: {
+        email: existingUser.email,
+        firstName: existingUser.firstName,
+        lastName: existingUser.password,
+        userID: existingUser.userID,
+      },
+      token: token,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server error",
+    });
+  }
 });
 
 // fetch all user specific todos
