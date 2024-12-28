@@ -170,10 +170,42 @@ userRouter.post("/createtodo", async (req, res) => {
 });
 
 // delete a todo
-userRouter.delete("/deletetodo", (req, res) => {
-  return res.status(200).json({
-    message: "Todo deleted successfully",
-  });
+userRouter.delete("/deletetodo", async (req, res) => {
+  const { userID, todoID } = req.body;
+
+  if (!userID || !todoID) {
+    return res.status(400).json({
+      message: "All fields are mandatory",
+    });
+  }
+
+  try {
+    const findTodo = await userModel.findOne({ userID });
+    if (findTodo.todos.length == 0) {
+      return res.status(400).json({
+        message: "No todo found || Please Add Todos",
+      });
+    }
+
+    console.log(findTodo.todos);
+    const todoIndex = findTodo.todos.findIndex((todo) => todo._id == todoID);
+    if (todoIndex === -1) {
+      return res.status(404).json({
+        message: "Todo not found",
+      });
+    }
+
+    findTodo.todos.splice(todoIndex, 1);
+    await findTodo.save();
+    return res.status(200).json({
+      message: "Todo deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server error",
+    });
+  }
 });
 
 // update existing todo
