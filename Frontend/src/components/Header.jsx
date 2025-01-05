@@ -32,7 +32,7 @@ const Header = () => {
   return (
     <div className="w-full h-[100px] bg-headerBgColor flex items-center justify-between px-10 shadow-md overflow-x-hidden">
       {/* Logo */}
-      <h1 className="text-[32px] font-montserrat font-semibold">
+      <h1 className="text-[32px] font-inter font-semibold cursor-pointer">
         <span className="text-customRed">Up</span>
         <span className="text-black">Next</span>
       </h1>
@@ -42,7 +42,7 @@ const Header = () => {
         <input
           type="text"
           placeholder="Search your task here..."
-          className="w-full text-sm text-SearchColor outline-none "
+          className="w-full text-sm text-SearchColor outline-none font-inter"
         />
         <button className="bg-customRed text-white w-[36px] h-[36px] rounded-[9px]">
           <img src={SearchIcon} alt="SearchIcon" />
@@ -51,17 +51,17 @@ const Header = () => {
 
       {/* Icons */}
       <div className="flex items-center gap-4">
-        <div className="w-[34px] h-[34px] bg-customRed flex items-center justify-center rounded-[15px]">
+        <div className="w-[34px] h-[34px] bg-customRed flex items-center justify-center rounded-[15px] cursor-pointer">
           <img src={NotificationIcon} alt="Notification Icon" />
         </div>
-        <div className="w-[34px] h-[34px] bg-customRed flex items-center justify-center rounded-[15px]">
+        <div className="w-[34px] h-[34px] bg-customRed flex items-center justify-center rounded-[15px] cursor-pointer">
           <img src={CalendarIcon} alt="Calendar Icon" />
         </div>
         <div className="text-right">
-          <h1 className="text-[15px] font-semibold text-gray-800">
+          <h1 className="text-[15px] font-semibold text-gray-800 font-inter">
             {currentDay}
           </h1>
-          <p className="text-[14px] text-DateColor">
+          <p className="text-[14px] text-DateColor font-inter">
             {formatDate(currentDate)}
           </p>
         </div>
