@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NotificationIcon from "../assets/Notifications.png";
 import CalendarIcon from "../assets/CalenderIcon.png";
 import SearchIcon from "../assets/SearchICon.png";
+
 const Header = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const days = [
@@ -29,15 +30,15 @@ const Header = () => {
   }
 
   return (
-    <div className="w-full h-[100px] bg-[#FDF9F9] flex items-center justify-between px-10 shadow-md">
+    <div className="w-full h-[100px] bg-[#FDF9F9] flex items-center justify-between px-10 shadow-md overflow-x-hidden">
       {/* Logo */}
       <h1 className="text-[32px] font-montserrat font-semibold">
         <span className="text-[#FF6767]">Up</span>
         <span className="text-black">Next</span>
       </h1>
 
-      {/* Search Bar */}
-      <div className="flex items-center bg-white shadow-md pl-4 py-2 w-[645px] h-[36px] rounded-[9px] ">
+      {/* Search Bar (hidden on mobile) */}
+      <div className="flex items-center bg-white shadow-md pl-4 py-2 w-[645px] h-[36px] rounded-[9px] hidden md:flex">
         <input
           type="text"
           placeholder="Search your task here..."
@@ -65,8 +66,6 @@ const Header = () => {
           </p>
         </div>
       </div>
-
-      {/* Current Date */}
     </div>
   );
 };
