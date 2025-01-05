@@ -30,10 +30,10 @@ const Header = () => {
   }
 
   return (
-    <div className="w-full h-[100px] bg-[#FDF9F9] flex items-center justify-between px-10 shadow-md overflow-x-hidden">
+    <div className="w-full h-[100px] bg-headerBgColor flex items-center justify-between px-10 shadow-md overflow-x-hidden">
       {/* Logo */}
       <h1 className="text-[32px] font-montserrat font-semibold">
-        <span className="text-[#FF6767]">Up</span>
+        <span className="text-customRed">Up</span>
         <span className="text-black">Next</span>
       </h1>
 
@@ -42,26 +42,26 @@ const Header = () => {
         <input
           type="text"
           placeholder="Search your task here..."
-          className="w-full text-sm text-[#A1A3AB] outline-none "
+          className="w-full text-sm text-SearchColor outline-none "
         />
-        <button className="bg-[#FF6767] text-white w-[36px] h-[36px] rounded-[9px]">
+        <button className="bg-customRed text-white w-[36px] h-[36px] rounded-[9px]">
           <img src={SearchIcon} alt="SearchIcon" />
         </button>
       </div>
 
       {/* Icons */}
       <div className="flex items-center gap-4">
-        <div className="w-[34px] h-[34px] bg-[#FF6767] flex items-center justify-center rounded-[15px]">
+        <div className="w-[34px] h-[34px] bg-customRed flex items-center justify-center rounded-[15px]">
           <img src={NotificationIcon} alt="Notification Icon" />
         </div>
-        <div className="w-[34px] h-[34px] bg-[#FF6767] flex items-center justify-center rounded-[15px]">
+        <div className="w-[34px] h-[34px] bg-customRed flex items-center justify-center rounded-[15px]">
           <img src={CalendarIcon} alt="Calendar Icon" />
         </div>
         <div className="text-right">
           <h1 className="text-[15px] font-semibold text-gray-800">
             {currentDay}
           </h1>
-          <p className="text-[14px] text-[#3ABEFF]">
+          <p className="text-[14px] text-DateColor">
             {formatDate(currentDate)}
           </p>
         </div>

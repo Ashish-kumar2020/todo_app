@@ -9,6 +9,8 @@ export default {
         inputFontColor: "#999999",
         signupFontColor: "#212427",
         headerBgColor: "#F8F8F8",
+        SearchColor: "#A1A3AB",
+        DateColor: "#3ABEFF",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
