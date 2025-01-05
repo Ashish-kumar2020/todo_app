@@ -9,7 +9,6 @@ import PasswordIcon from "../assets/password_icon.png";
 const Signin = () => {
   return (
     <div className="relative w-full h-screen">
-      {/* Background */}
       <div className="absolute w-full h-full bg-[#FF9090] bg-opacity-20" />
       <img
         className="absolute w-full h-full object-cover bg-customRed"

@@ -8,6 +8,7 @@ export default {
         customWhite: "FFFFFF",
         inputFontColor: "#999999",
         signupFontColor: "#212427",
+        headerBgColor: "#F8F8F8",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
