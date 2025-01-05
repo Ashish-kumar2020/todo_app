@@ -8,127 +8,97 @@ import EmailIcon from "../assets/Email_icon.png";
 import PasswordIcon from "../assets/password_icon.png";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+
 const Signup = () => {
   return (
     <div className="relative w-full h-screen">
+      {/* Background Image */}
       <img
         className="absolute w-full h-full object-cover bg-customRed"
         src={BackgroundImg}
         alt="Background"
       />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1236px] h-[627px] bg-white shadow-lg rounded-2xl">
-        <div className="flex items-center justify-center h-full">
+
+      {/* Signup Card */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[80%] lg:w-[1236px] lg:h-[627px] bg-white shadow-lg rounded-2xl flex flex-col lg:flex-row">
+        {/* Left Section (Character Illustration) */}
+        <div className="hidden lg:flex items-end justify-start w-full lg:w-1/2 relative">
           <img
-            className="w-[363px] h-[462px] absolute bottom-0 left-0 mb-4 ml-4"
+            className="w-[363px] h-[462px] absolute bottom-4 left-4"
             src={Character}
-            alt=""
-          />
-        </div>
-      </div>
-
-      {/* Signup Form */}
-      <div className="absolute left-[660px] top-[83px] w-[559px] h-[582px] mt-[20px]">
-        <span className="text-[36px] ml-[40px]  font-bold text-signupFontColor font-montserrat">
-          Sign Up
-        </span>
-        {/* First Name container */}
-        <div className="ml-[40px] mt-[20px]">
-          <input
-            type="text"
-            placeholder="Enter First Name"
-            className="text-[16px] w-[459px] h-[50px] p-[22px] pl-[50px] border-[1px] border-solid border-black rounded-[5px] text-[16px] text-inputFontColor font-montserrat"
-            required
-          />
-          <img
-            src={FirstName}
-            alt="icon"
-            className="absolute left-[56px] top-[87px] w-6 h-6"
+            alt="Signup Illustration"
           />
         </div>
 
-        {/* Last Name Container */}
-        <div className="ml-[40px] mt-[20px]">
-          <input
-            type="text"
-            placeholder="Enter Last Name"
-            className="text-[16px] w-[459px] h-[50px] p-[22px] pl-[50px] border-[1px] border-solid border-black rounded-[5px] text-[16px] text-inputFontColor font-montserrat"
-            required
-          />
-          <img
-            src={LastNameIcon}
-            alt="icon"
-            className="absolute left-[56px] top-[156px] w-6 h-6"
-          />
-        </div>
+        {/* Right Section (Signup Form) */}
+        <div className="w-full lg:w-1/2 p-6 lg:p-10">
+          <h1 className="text-[28px] md:text-[36px] font-bold text-signupFontColor font-montserrat">
+            Sign Up
+          </h1>
 
-        {/* User Name Container */}
-        <div className="ml-[40px] mt-[20px]">
-          <input
-            type="text"
-            placeholder="Enter Username"
-            className="text-[16px] w-[459px] h-[50px] p-[22px] pl-[50px] border-[1px] border-solid border-black rounded-[5px] text-[16px] text-inputFontColor font-montserrat"
-            required
-          />
-          <img
-            src={UserIcon}
-            alt="icon"
-            className="absolute left-[56px] top-[226px] w-6 h-6"
-          />
-        </div>
+          {/* Input Fields */}
+          {[
+            { label: "Enter First Name", icon: FirstName },
+            { label: "Enter Last Name", icon: LastNameIcon },
+            { label: "Enter Username", icon: UserIcon },
+            { label: "Enter Email", icon: EmailIcon },
+            { label: "Enter Password", icon: PasswordIcon },
+          ].map((field, index) => (
+            <div className="relative mt-5" key={index}>
+              <input
+                type="text"
+                placeholder={field.label}
+                className="w-full h-[50px] pl-10 border border-gray-300 rounded-md text-sm md:text-base text-inputFontColor font-montserrat focus:outline-none focus:ring-2 focus:ring-customRed"
+                required
+                aria-label={field.label}
+              />
+              <img
+                src={field.icon}
+                alt={`${field.label} Icon`}
+                className="absolute left-3 top-[12px] w-6 h-6"
+              />
+            </div>
+          ))}
 
-        {/* Email Container */}
-        <div className="ml-[40px] mt-[20px]">
-          <input
-            type="text"
-            placeholder="Enter Email"
-            className="text-[16px] w-[459px] h-[50px] p-[22px] pl-[50px] border-[1px] border-solid border-black rounded-[5px] text-[16px] text-inputFontColor font-montserrat"
-            required
-          />
-          <img
-            src={EmailIcon}
-            alt="icon"
-            className="absolute left-[56px] top-[297px] w-6 h-6"
-          />
-        </div>
-
-        {/* Enter Password Container */}
-        <div className="ml-[40px] mt-[20px]">
-          <input
-            type="text"
-            placeholder="Enter Password"
-            className="text-[16px] w-[459px] h-[50px] p-[22px] pl-[50px] border-[1px] border-solid border-black rounded-[5px] text-[16px] text-inputFontColor font-montserrat"
-            required
-          />
-          <img
-            src={PasswordIcon}
-            alt="icon"
-            className="absolute left-[56px] top-[366px] w-6 h-6"
-          />
-        </div>
-
-        {/* Remember Me Container*/}
-        <div className="ml-[40px] mt-[20px]">
-          <input type="checkbox" name="" id="" className="w-[18px] h-[18px]" />
-          <span className="relative text-signupFontColor font-montserrat top-[-4px] p-[22px] pl-[16px]">
-            I agree to all terms
-          </span>
-        </div>
-
-        <div className="ml-[40px] mt-[20px]">
-          <Stack spacing={2} direction="row">
-            <Button
-              className="w-[129px] h-[60px] bg-customRed hover:bg-red-700"
-              variant="contained"
-              style={{ backgroundColor: "#FF9090" }}
+          {/* Terms Checkbox */}
+          <div className="mt-5 flex items-center">
+            <input
+              type="checkbox"
+              id="terms"
+              className="w-[18px] h-[18px] mr-2"
+            />
+            <label
+              htmlFor="terms"
+              className="text-signupFontColor font-montserrat text-sm md:text-base text-gray-600"
             >
-              Contained
-            </Button>
-          </Stack>
-        </div>
+              I agree to all terms
+            </label>
+          </div>
 
-        {/* Already have a account */}
-        <div className="ml-[40px] mt-[20px]">
-          <span>Already have a account? Signin</span>
+          {/* Submit Button */}
+          <div className="mt-5">
+            <Stack spacing={2} direction="row">
+              <Button
+                className="w-full h-[50px] text-white font-bold"
+                variant="contained"
+                style={{
+                  backgroundColor: "#FF9090",
+                  borderRadius: "5px",
+                  fontFamily: "Montserrat",
+                }}
+              >
+                Register
+              </Button>
+            </Stack>
+          </div>
+
+          {/* Already Have an Account */}
+          <div className="mt-5 text-center lg:text-left text-sm text-gray-600">
+            Already have an account?{" "}
+            <a href="/signin" className="text-customRed font-bold">
+              Sign in
+            </a>
+          </div>
         </div>
       </div>
     </div>
