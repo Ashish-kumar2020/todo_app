@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import Profile from "../assets/profile.png";
-
+import { toggleVisibility } from "../slice/visibilitySlice";
 const SideNav = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
 
@@ -14,6 +14,8 @@ const SideNav = () => {
     { id: "Help", label: "Help" },
   ];
 
+  // const isSideNavVisible = useSelector((state) => state.visibility.isVisible);
+  const dispatch = useDispatch();
   return (
     <div className="w-[315px] h-[100vh] bg-customRed rounded-tr-[10px] rounded-br-[10px]">
       {/* Profile image */}
@@ -33,6 +35,7 @@ const SideNav = () => {
             key={item.id}
             onClick={() => {
               setActiveItem(item.id);
+              dispatch(toggleVisibility());
             }}
             className={`w-[258px] h-[59px] ml-[21px] cursor-pointer text-[16px] font-inter mb-[12px] flex items-center rounded-[15px] ${
               activeItem === item.id ? "bg-white text-customRed" : "text-white"
