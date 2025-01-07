@@ -6,7 +6,7 @@ import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 
 function App() {
-  const isSideNavVisible = useSelector((state) => state.visibility.isVisible);
+  const isSideNavVisible = useSelector((state) => state.visibility);
   console.log(isSideNavVisible); // Logs the current state (true or false)
 
   return (

@@ -7,9 +7,9 @@ const SideNav = () => {
 
   const navItems = [
     { id: "Dashboard", label: "Dashboard" },
-    { id: "Vital Task", label: "Vital Task" },
-    { id: "My Task", label: "My Task" },
-    { id: "Task Categories", label: "Task Categories" },
+    { id: "VitalTask", label: "Vital Task" },
+    { id: "MyTask", label: "My Task" },
+    { id: "TaskCategories", label: "Task Categories" },
     { id: "Settings", label: "Settings" },
     { id: "Help", label: "Help" },
   ];
@@ -35,7 +35,7 @@ const SideNav = () => {
             key={item.id}
             onClick={() => {
               setActiveItem(item.id);
-              dispatch(toggleVisibility());
+              dispatch(toggleVisibility({ section: item.id }));
             }}
             className={`w-[258px] h-[59px] ml-[21px] cursor-pointer text-[16px] font-inter mb-[12px] flex items-center rounded-[15px] ${
               activeItem === item.id ? "bg-white text-customRed" : "text-white"
