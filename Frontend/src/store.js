@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import visibilitySlice from "./slice/visibilitySlice";
+import visibilityReducer from "./slice/visibilitySlice";
 
 const store = configureStore({
   reducer: {
-    visibility: visibilitySlice,
+    visibility: visibilityReducer,
   },
 });
 export default store;

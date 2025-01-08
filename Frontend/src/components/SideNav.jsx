@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Profile from "../assets/profile.png";
 import { toggleVisibility } from "../slice/visibilitySlice";
+import { Link } from "react-router-dom";
+
 const SideNav = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
 
@@ -14,8 +16,8 @@ const SideNav = () => {
     { id: "Help", label: "Help" },
   ];
 
-  // const isSideNavVisible = useSelector((state) => state.visibility.isVisible);
   const dispatch = useDispatch();
+
   return (
     <div className="w-[315px] h-[100vh] bg-customRed rounded-tr-[10px] rounded-br-[10px]">
       {/* Profile image */}
@@ -33,16 +35,19 @@ const SideNav = () => {
         {navItems.map((item) => (
           <li
             key={item.id}
-            onClick={() => {
-              setActiveItem(item.id);
-              dispatch(toggleVisibility({ section: item.id }));
-            }}
             className={`w-[258px] h-[59px] ml-[21px] cursor-pointer text-[16px] font-inter mb-[12px] flex items-center rounded-[15px] ${
               activeItem === item.id ? "bg-white text-customRed" : "text-white"
             }`}
           >
-            {" "}
-            <span className="ml-[16px]">{item.label}</span>
+            <Link
+              to={`/body/${item.id}`}
+              onClick={() => {
+                setActiveItem(item.id);
+                dispatch(toggleVisibility({ section: item.id }));
+              }}
+            >
+              <span className="ml-[16px]">{item.label}</span>
+            </Link>
           </li>
         ))}
       </ul>
