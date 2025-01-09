@@ -15,7 +15,7 @@ const SideNav = () => {
   ];
 
   return (
-    <div className="w-[315px] h-[87vh] bg-customRed rounded-tr-[10px] rounded-br-[10px]">
+    <div className="w-[315px] h-[100%] bg-customRed rounded-tr-[10px] rounded-br-[10px]">
       <div className="relative left-[107px] top-[20px]">
         <img src={Profile} alt="Profile" />
       </div>
