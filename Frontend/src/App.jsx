@@ -1,18 +1,18 @@
 import "./App.css";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
-import VitalTask from "./components/VitalTask";
 import DashBoard from "./components/DashBoard";
-import MyTask from "./components/MyTask";
-import TaskCategories from "./components/TaskCategories";
-import Settings from "./components/Settings";
-import Help from "./components/Help";
+import Notes from "./components/Notes";
+import EditProfile from "./components/EditProfile";
 import {
   createBrowserRouter,
   RouterProvider,
   Navigate,
 } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
+import CompletedTask from "./components/CompletedTask";
+import InProgressTask from "./components/InProgressTask";
+import Backlog from "./components/Backlog";
 
 function App() {
   const router = createBrowserRouter([
@@ -29,11 +29,11 @@ function App() {
       element: <AppLayout />,
       children: [
         { path: "Dashboard", element: <DashBoard /> },
-        { path: "VitalTask", element: <VitalTask /> },
-        { path: "MyTask", element: <MyTask /> },
-        { path: "TaskCategories", element: <TaskCategories /> },
-        { path: "Settings", element: <Settings /> },
-        { path: "Help", element: <Help /> },
+        { path: "CompletedTask", element: <CompletedTask /> },
+        { path: "InProgressTask", element: <InProgressTask /> },
+        { path: "Backlog", element: <Backlog /> },
+        { path: "Notes", element: <Notes /> },
+        { path: "EditProfile", element: <EditProfile /> },
         { path: "/body", element: <Navigate to="/body/Dashboard" /> },
       ],
     },

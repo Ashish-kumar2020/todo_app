@@ -16,7 +16,6 @@ const Header = () => {
   ];
 
   const currentDay = days[currentDate.getDay()];
-
   useEffect(() => {
     const timer = setInterval(() => setCurrentDate(new Date()), 1000);
     return () => clearInterval(timer);
@@ -32,10 +31,10 @@ const Header = () => {
   return (
     <div className="w-full h-[100px] bg-headerBgColor flex items-center justify-between px-10 shadow-md overflow-x-hidden">
       {/* Logo */}
-      <h1 className="text-[32px] font-inter font-semibold cursor-pointer">
+      <div className="text-[32px] font-inter font-semibold cursor-pointer">
         <span className="text-customRed">Up</span>
         <span className="text-black">Next</span>
-      </h1>
+      </div>
 
       {/* Search Bar (hidden on mobile) */}
       <div className="flex items-center bg-white shadow-md pl-4 py-2 w-[645px] h-[36px] rounded-[9px] hidden md:flex">
