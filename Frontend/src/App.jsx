@@ -7,7 +7,11 @@ import MyTask from "./components/MyTask";
 import TaskCategories from "./components/TaskCategories";
 import Settings from "./components/Settings";
 import Help from "./components/Help";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 
 function App() {
@@ -30,6 +34,7 @@ function App() {
         { path: "TaskCategories", element: <TaskCategories /> },
         { path: "Settings", element: <Settings /> },
         { path: "Help", element: <Help /> },
+        { path: "/body", element: <Navigate to="/body/Dashboard" /> },
       ],
     },
   ]);
