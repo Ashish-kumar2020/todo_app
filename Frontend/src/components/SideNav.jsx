@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Profile from "../assets/profile.png";
 import { Link, useNavigate } from "react-router-dom";
-
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import { deepOrange, deepPurple } from "@mui/material/colors";
 const SideNav = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
 
@@ -16,9 +18,14 @@ const SideNav = () => {
 
   return (
     <div className="w-[315px] h-[100%] bg-customRed rounded-tr-[10px] rounded-br-[10px]">
-      <div className="relative left-[107px] top-[20px]">
-        <img src={Profile} alt="Profile" />
-      </div>
+      <Stack direction="row" spacing={2}>
+        <Avatar
+          sx={{ bgcolor: deepPurple[500] }}
+          style={{ marginLeft: "130px", marginTop: "30px" }}
+        >
+          AS
+        </Avatar>
+      </Stack>
       <div className="relative left-[74px] w-[176px] h-[36px] top-[30px]">
         <h1 className="text-[16px] font-bold text-white">Ashish Kumar Singh</h1>
         <h1 className="text-[12px] text-white">ashishsingh@upnext.com</h1>
