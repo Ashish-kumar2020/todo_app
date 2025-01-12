@@ -285,10 +285,10 @@ const InProgressTask = () => {
               )}
               <Button
                 startIcon={<DoneAllOutlinedIcon />}
-                color="primary"
+                color="success"
                 onClick={handleClose}
               >
-                Done
+                Mark as Done
               </Button>
               <Button
                 startIcon={<DeleteForeverIcon />}
