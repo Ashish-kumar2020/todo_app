@@ -1,12 +1,45 @@
-import React from "react";
-import { Mail, Lock } from "lucide-react";
+import React, { useState } from "react";
+
 import BackgroundImg from "../assets/background.png";
 import SignInCharacter from "../assets/SigninCharacter.png";
 
 import EmailIcon from "../assets/Email_icon.png";
 import PasswordIcon from "../assets/password_icon.png";
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Signin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const sumbitLoginData = async () => {
+    try {
+      const data = {
+        email,
+        password,
+      };
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/user/signin",
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (response.data) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userID", response.data.userDetails.userID);
+        setEmail("");
+        setPassword("");
+        navigate("/body/Dashboard");
+      }
+    } catch (error) {
+      console.error(
+        "Error during signup:",
+        error.response?.data || error.message
+      );
+      alert("Signup Failed! Please try again.");
+    }
+  };
   return (
     <div className="relative w-full h-screen">
       <div className="absolute w-full h-full bg-[#FF9090] bg-opacity-20" />
@@ -26,8 +59,18 @@ const Signin = () => {
           {/* Input Fields */}
 
           {[
-            { label: "Enter Email", icon: EmailIcon },
-            { label: "Enter Password", icon: PasswordIcon },
+            {
+              label: "Enter Email",
+              icon: EmailIcon,
+              value: email,
+              setValue: setEmail,
+            },
+            {
+              label: "Enter Password",
+              icon: PasswordIcon,
+              value: password,
+              setValue: setPassword,
+            },
           ].map((field, index) => (
             <div className="relative mt-5" key={index}>
               <input
@@ -36,6 +79,8 @@ const Signin = () => {
                 className="w-full h-[50px] pl-10 border border-gray-300 rounded-md text-sm md:text-base text-inputFontColor font-montserrat focus:outline-none focus:ring-2 focus:ring-customRed"
                 required
                 aria-label={field.label}
+                value={field.value}
+                onChange={(e) => field.setValue(e.target.value)}
               />
               <img
                 src={field.icon}
@@ -61,7 +106,10 @@ const Signin = () => {
           </div>
 
           {/* Sign In Button */}
-          <button className="mt-5 w-full h-[50px] bg-[#FF9090] hover:bg-[#FF7070] text-white font-bold rounded-md transition duration-200">
+          <button
+            className="mt-5 w-full h-[50px] bg-[#FF9090] hover:bg-[#FF7070] text-white font-bold rounded-md transition duration-200"
+            onClick={sumbitLoginData}
+          >
             Sign In
           </button>
 
