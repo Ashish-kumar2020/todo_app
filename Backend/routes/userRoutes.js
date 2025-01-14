@@ -126,14 +126,6 @@ userRouter.get("/fetchtodos", async (req, res) => {
 
 // create a todo
 
-// {
-//   "title": "Ashish",
-//   "description": "This is my first ever todo",
-//   "priority": "Medium",
-//   "startDate": "2025-01-13T18:30:00.000Z",
-//   "endDate": "2025-01-15T18:30:00.000Z",
-//   "userID": "67868cb8e6965c0b9bf4f993"
-// }
 userRouter.post("/createtodo", async (req, res) => {
   const {
     title,
