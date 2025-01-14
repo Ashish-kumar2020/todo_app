@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import BackgroundImg from "../assets/background.png";
 import Character from "../assets/signupCharacter.png";
 import FirstName from "../assets/firstName-icon.png";
@@ -8,8 +8,55 @@ import EmailIcon from "../assets/Email_icon.png";
 import PasswordIcon from "../assets/password_icon.png";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import axios from "axios";
+// /http://localhost:3000/api/v1/user/signup
 
+/*
+"email" : "ashish@todos.com",
+    "password" : "ashish@todos",
+    "firstName" : "Ashish Kumar",
+    "lastName" : "Singh"
+*/
 const Signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userName, setuserName] = useState("");
+
+  const submitSignUpData = async () => {
+    try {
+      const data = {
+        email,
+        password,
+        firstName,
+        lastName,
+        userName,
+      };
+      console.log(data);
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/user/signup",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setEmail("");
+      setPassword("");
+      setFirstName("");
+      setLastName("");
+      setuserName("");
+      console.log("Signup Successful:", response.data);
+    } catch (error) {
+      console.error(
+        "Error during signup:",
+        error.response?.data || error.message
+      );
+      alert("Signup Failed! Please try again.");
+    }
+  };
   return (
     <div className="relative w-full h-screen">
       {/* Background Image */}
@@ -38,19 +85,46 @@ const Signup = () => {
 
           {/* Input Fields */}
           {[
-            { label: "Enter First Name", icon: FirstName },
-            { label: "Enter Last Name", icon: LastNameIcon },
-            { label: "Enter Username", icon: UserIcon },
-            { label: "Enter Email", icon: EmailIcon },
-            { label: "Enter Password", icon: PasswordIcon },
+            {
+              label: "Enter First Name",
+              icon: FirstName,
+              value: firstName,
+              setValue: setFirstName,
+            },
+            {
+              label: "Enter Last Name",
+              icon: LastNameIcon,
+              value: lastName,
+              setValue: setLastName,
+            },
+            {
+              label: "Enter Username",
+              icon: UserIcon,
+              value: userName,
+              setValue: setuserName,
+            },
+            {
+              label: "Enter Email",
+              icon: EmailIcon,
+              value: email,
+              setValue: setEmail,
+            },
+            {
+              label: "Enter Password",
+              icon: PasswordIcon,
+              value: password,
+              setValue: setPassword,
+            },
           ].map((field, index) => (
             <div className="relative mt-5" key={index}>
               <input
-                type="text"
+                type={field.label === "Enter Password" ? "password" : "text"}
                 placeholder={field.label}
                 className="w-full h-[50px] pl-10 border border-gray-300 rounded-md text-sm md:text-base text-inputFontColor font-montserrat focus:outline-none focus:ring-2 focus:ring-customRed"
                 required
                 aria-label={field.label}
+                value={field.value}
+                onChange={(e) => field.setValue(e.target.value)}
               />
               <img
                 src={field.icon}
@@ -86,6 +160,7 @@ const Signup = () => {
                   borderRadius: "5px",
                   fontFamily: "Montserrat",
                 }}
+                onClick={submitSignUpData}
               >
                 Register
               </Button>

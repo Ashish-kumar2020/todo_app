@@ -4,10 +4,22 @@ const { Types } = require("mongoose");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
 
+/*
+
+{
+   {
+    "email": "dfret@gmail.ocm",
+    "password": "qw2e3r45gt",
+    "firstName": "derfet",
+    "lastName": "ert",
+    "userName": "ert"
+}
+}
+*/
 // create a new user
 userRouter.post("/signup", async (req, res) => {
-  const { email, password, firstName, lastName } = req.body;
-  if (!email || !password || !firstName || !lastName) {
+  const { email, password, firstName, lastName, userName } = req.body;
+  if (!email || !password || !firstName || !lastName || !userName) {
     return res.status(400).json({
       message: "All fields are mandatory",
     });
@@ -27,6 +39,7 @@ userRouter.post("/signup", async (req, res) => {
       firstName: firstName,
       lastName: lastName,
       userID: userID,
+      userName: userName,
     });
 
     return res.status(200).json({
