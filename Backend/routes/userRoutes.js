@@ -96,10 +96,11 @@ userRouter.post("/signin", async (req, res) => {
 });
 
 // fetch all user specific todos
-userRouter.get("/fetchtodos", async (req, res) => {
+userRouter.post("/fetchtodos", async (req, res) => {
   const { userID } = req.body;
+  console.log(req.body);
   if (!userID) {
-    return res.json(400).json({
+    return res.status(400).json({
       message: "All fields are mandatory",
     });
   }
