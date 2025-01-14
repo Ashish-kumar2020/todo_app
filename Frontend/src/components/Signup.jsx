@@ -9,14 +9,8 @@ import PasswordIcon from "../assets/password_icon.png";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import axios from "axios";
-// /http://localhost:3000/api/v1/user/signup
+import { useNavigate } from "react-router-dom";
 
-/*
-"email" : "ashish@todos.com",
-    "password" : "ashish@todos",
-    "firstName" : "Ashish Kumar",
-    "lastName" : "Singh"
-*/
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +18,7 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [userName, setuserName] = useState("");
 
+  const navigate = useNavigate();
   const submitSignUpData = async () => {
     try {
       const data = {
@@ -43,12 +38,14 @@ const Signup = () => {
           },
         }
       );
-      setEmail("");
+      if (response.data) {
+        navigate("/login");
+      }
+      console.log("Response :", response.data);
       setPassword("");
       setFirstName("");
       setLastName("");
       setuserName("");
-      console.log("Signup Successful:", response.data);
     } catch (error) {
       console.error(
         "Error during signup:",
