@@ -37,7 +37,7 @@ const Signin = () => {
         "Error during signup:",
         error.response?.data || error.message
       );
-      alert("Signup Failed! Please try again.");
+      alert("Signin Failed! Please try again.");
     }
   };
   return (

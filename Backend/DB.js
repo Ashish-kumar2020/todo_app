@@ -8,6 +8,8 @@ const todoSchema = new Schema({
   description: String,
   isCompleted: Boolean,
   priority: String,
+  startDate: Date,
+  endDate: Date,
 });
 
 const userSchema = new Schema({

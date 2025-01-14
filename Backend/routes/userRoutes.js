@@ -4,18 +4,6 @@ const { Types } = require("mongoose");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
 
-/*
-
-{
-   {
-    "email": "dfret@gmail.ocm",
-    "password": "qw2e3r45gt",
-    "firstName": "derfet",
-    "lastName": "ert",
-    "userName": "ert"
-}
-}
-*/
 // create a new user
 userRouter.post("/signup", async (req, res) => {
   const { email, password, firstName, lastName, userName } = req.body;
@@ -137,15 +125,34 @@ userRouter.get("/fetchtodos", async (req, res) => {
 });
 
 // create a todo
+
+// {
+//   "title": "Ashish",
+//   "description": "This is my first ever todo",
+//   "priority": "Medium",
+//   "startDate": "2025-01-13T18:30:00.000Z",
+//   "endDate": "2025-01-15T18:30:00.000Z",
+//   "userID": "67868cb8e6965c0b9bf4f993"
+// }
 userRouter.post("/createtodo", async (req, res) => {
-  const { title, description, isCompleted, priority, userID } = req.body;
+  const {
+    title,
+    description,
+    isCompleted,
+    priority,
+    userID,
+    startDate,
+    endDate,
+  } = req.body;
 
   if (
     !title ||
     !description ||
     isCompleted == undefined ||
     !priority ||
-    !userID
+    !userID ||
+    !startDate ||
+    !endDate
   ) {
     return res.status(400).json({
       message: "All fields are mandatory",
@@ -166,6 +173,8 @@ userRouter.post("/createtodo", async (req, res) => {
       description,
       isCompleted,
       priority,
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
     };
     existingUser.todos.push(todoDetails);
     await existingUser.save();

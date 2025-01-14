@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Container,
   TextField,
@@ -16,8 +17,8 @@ const AddTodo = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("");
-  const [selectStartDate, setSelectStartDate] = useState(null);
-  const [selectEndDate, setSelectEndDate] = useState(null);
+  const [startDate, setSelectStartDate] = useState(null);
+  const [endDate, setSelectEndDate] = useState(null);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -33,6 +34,43 @@ const AddTodo = () => {
   };
   const handleEndDateChange = (newValue) => {
     setSelectEndDate(newValue);
+  };
+
+  const handleAddTodoData = async () => {
+    try {
+      let userID = localStorage.getItem("userID");
+      const data = {
+        title,
+        description,
+        priority,
+        startDate,
+        endDate,
+        userID,
+        isCompleted: false,
+      };
+      console.log(data);
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/user/createtodo",
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (response.data) {
+        console.log("Message : ", response.data.message);
+        setTitle("");
+        setDescription("");
+        setPriority("");
+        setSelectStartDate(null);
+        setSelectEndDate(null);
+      }
+    } catch (error) {
+      console.error(
+        "Error during signup:",
+        error.response?.data || error.message
+      );
+      alert("Signin Failed! Please try again.");
+    }
   };
   return (
     <div>
@@ -106,7 +144,7 @@ const AddTodo = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Select Start Date"
-            value={selectStartDate}
+            value={startDate}
             onChange={handleStartDateChange}
             sx={{
               marginLeft: "30px",
@@ -117,7 +155,7 @@ const AddTodo = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Select End Date"
-            value={selectEndDate}
+            value={endDate}
             onChange={handleEndDateChange}
             sx={{
               marginLeft: "30px",
@@ -132,20 +170,7 @@ const AddTodo = () => {
               height: "50px",
               backgroundColor: "#FF6767",
             }}
-            onClick={() => {
-              console.log({
-                Title: title,
-                description: description,
-                priority: priority,
-                startDate: selectStartDate,
-                endDate: selectEndDate,
-              });
-              setTitle("");
-              setDescription("");
-              setPriority("");
-              setSelectStartDate(null);
-              setSelectEndDate(null);
-            }}
+            onClick={handleAddTodoData}
             variant="contained"
           >
             Submit Todo
