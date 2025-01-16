@@ -275,6 +275,44 @@ userRouter.put("/updatetodo", async (req, res) => {
   }
 });
 
+// update task to inprogress
+userRouter.put("/moveToInprogress", async (req, res) => {
+  const { userID, isCompleted } = req.body;
+
+  try {
+    if (!userID || !isCompleted == undefined) {
+      return res.status(400).json({
+        message: "All fields are mandatory",
+      });
+    }
+    const findTodo = await userModel.findOne({ userID });
+    if (findTodo.todos.length == 0) {
+      return res.status(400).json({
+        message: "No todo found || Please Add Todos",
+      });
+    }
+    const todoIndex = findTodo.todos.findIndex((todo) => todo._id == todoID);
+    console.log("Todo Index", todoIndex);
+    if (todoIndex === -1) {
+      return res.status(404).json({
+        message: "Todo not found",
+      });
+    }
+    if (isCompleted !== undefined)
+      findTodo.todos[todoIndex].isCompleted = isCompleted;
+    await findTodo.save();
+
+    console.log(findTodo.todos[todoIndex]);
+    return res.status(200).json({
+      message: "Todo updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server error",
+    });
+  }
+});
 module.exports = {
   userRouter: userRouter,
 };

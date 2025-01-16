@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Dialog,
@@ -19,130 +19,36 @@ const InProgressTask = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [taskStatus, setTaskStatus] = useState();
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, aut!",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 2,
-      title: "Task 2",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 3,
-      title: "Task 3",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 4,
-      title: "Task 4",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 5,
-      title: "Task 5",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 6,
-      title: "Task 6",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 7,
-      title: "Task 7",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 8,
-      title: "Task 8",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 9,
-      title: "Task 9",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 10,
-      title: "Task 10",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 11,
-      title: "Task 11",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 12,
-      title: "Task 12",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 13,
-      title: "Task 13",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 14,
-      title: "Task 14",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 15,
-      title: "Task 15",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 16,
-      title: "Task 16",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 17,
-      title: "Task 17",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 18,
-      title: "Task 18",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 19,
-      title: "Task 19",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-    {
-      id: 20,
-      title: "Task 20",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laborum suscipit autem ducimus id eaque fugiat itaque voluptatibus iste animi cumque quas aliquam asperiores, facere alias nobis ratione labore quasi!",
-    },
-  ]);
+  const [tasks, setTasks] = useState();
 
+  const fetchTodos = async () => {
+    try {
+      let userID = localStorage.getItem("userID");
+      const data = {
+        userID,
+      };
+      let response = await axios.post(
+        "http://localhost:3000/api/v1/user/moveToInprogress",
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (response.data) {
+        setTasks(response.data.todos);
+      }
+    } catch (error) {
+      console.error(
+        "Error during fetching todos:",
+        error.response?.data || error.message
+      );
+      alert(" Problem in fetching! Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
   const handleTaskOpening = (task) => {
     setSelectedTask(task);
     setOpenDialog(true);
@@ -286,7 +192,7 @@ const InProgressTask = () => {
               <Button
                 startIcon={<DoneAllOutlinedIcon />}
                 color="success"
-                onClick={handleClose}
+                onClick={handleMarkAsDone}
               >
                 Mark as Done
               </Button>
