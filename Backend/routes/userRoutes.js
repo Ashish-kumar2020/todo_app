@@ -128,6 +128,39 @@ userRouter.post("/fetchtodos", async (req, res) => {
   }
 });
 
+// fetch all completed user specific todos
+userRouter.post("/completedTodos", async (req, res) => {
+  const { userID } = req.body;
+
+  if (!userID) {
+    return res.status(400).json({
+      message: "All fields are mandatory",
+    });
+  }
+
+  try {
+    const findUser = await userModel.findOne({ userID });
+    if (!findUser) {
+      return res.status(400).json({
+        message: "Invalid user",
+      });
+    }
+
+    // Filter todos where isCompleted is false
+    const completedTodos = findUser.todos.filter((todo) => todo.isCompleted);
+
+    return res.status(200).json({
+      message: "Pending Todos fetched successfully",
+      todos: completedTodos,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server error",
+    });
+  }
+});
+
 // create a todo
 
 userRouter.post("/createtodo", async (req, res) => {
