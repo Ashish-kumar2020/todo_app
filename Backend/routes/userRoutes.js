@@ -220,9 +220,9 @@ userRouter.post("/createtodo", async (req, res) => {
 });
 
 // delete a todo
-userRouter.delete("/deletetodo", async (req, res) => {
+userRouter.post("/deletetodo", async (req, res) => {
   const { userID, todoID } = req.body;
-
+  console.log(userID, todoID);
   if (!userID || !todoID) {
     return res.status(400).json({
       message: "All fields are mandatory",

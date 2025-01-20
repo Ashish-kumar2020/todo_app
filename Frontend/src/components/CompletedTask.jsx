@@ -30,9 +30,23 @@ const CompletedTask = () => {
     setSelectedTask(null);
   };
 
-  const handleDelete = () => {
-    if (selectedTask) {
-      setTasks(tasks.filter((task) => task.id !== selectedTask.id));
+  const handleDelete = async () => {
+    const userID = localStorage.getItem("userID");
+    const data = {
+      userID: userID,
+      todoID: selectedTask._id,
+    };
+
+    console.log(data);
+    let response = await axios.post(
+      "http://localhost:3000/api/v1/user/deletetodo",
+      data,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (response.data) {
+      fetchTodos();
       handleClose();
     }
   };
