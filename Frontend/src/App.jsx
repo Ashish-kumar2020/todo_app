@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import CompletedTask from "./components/CompletedTask";
-import InProgressTask from "./components/InProgressTask";
+
 import Backlog from "./components/Backlog";
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
       children: [
         { path: "Dashboard", element: <DashBoard /> },
         { path: "CompletedTask", element: <CompletedTask /> },
-        { path: "InProgressTask", element: <InProgressTask /> },
+
         { path: "Backlog", element: <Backlog /> },
         { path: "Notes", element: <Notes /> },
         { path: "EditProfile", element: <EditProfile /> },

@@ -10,7 +10,6 @@ const SideNav = () => {
   const navItems = [
     { id: "Dashboard", label: "Dashboard" },
     { id: "CompletedTask", label: "Completed Task" },
-    { id: "InProgressTask", label: "In Progress Task" },
     { id: "Backlog", label: "Backlog" },
     { id: "Notes", label: "Notes" },
     { id: "EditProfile", label: "Edit Profile" },

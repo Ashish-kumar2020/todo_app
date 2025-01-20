@@ -98,7 +98,7 @@ userRouter.post("/signin", async (req, res) => {
 // fetch all user specific todos
 userRouter.post("/fetchtodos", async (req, res) => {
   const { userID } = req.body;
-  console.log(req.body);
+
   if (!userID) {
     return res.status(400).json({
       message: "All fields are mandatory",
@@ -113,12 +113,15 @@ userRouter.post("/fetchtodos", async (req, res) => {
       });
     }
 
+    // Filter todos where isCompleted is false
+    const pendingTodos = findUser.todos.filter((todo) => !todo.isCompleted);
+
     return res.status(200).json({
-      message: "All Todos fetched successfully",
-      todos: findUser.todos,
+      message: "Pending Todos fetched successfully",
+      todos: pendingTodos,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({
       message: "Internal Server error",
     });
@@ -171,7 +174,6 @@ userRouter.post("/createtodo", async (req, res) => {
     };
     existingUser.todos.push(todoDetails);
     await existingUser.save();
-    console.log(existingUser.todos);
 
     return res.status(200).json({
       message: "Todo created successfully",
@@ -202,7 +204,6 @@ userRouter.delete("/deletetodo", async (req, res) => {
       });
     }
 
-    console.log(findTodo.todos);
     const todoIndex = findTodo.todos.findIndex((todo) => todo._id == todoID);
     if (todoIndex === -1) {
       return res.status(404).json({
@@ -248,7 +249,7 @@ userRouter.put("/updatetodo", async (req, res) => {
       });
     }
     const todoIndex = findTodo.todos.findIndex((todo) => todo._id == todoID);
-    console.log("Todo Index", todoIndex);
+
     if (todoIndex === -1) {
       return res.status(404).json({
         message: "Todo not found",
@@ -263,7 +264,6 @@ userRouter.put("/updatetodo", async (req, res) => {
 
     await findTodo.save();
 
-    console.log(findTodo.todos[todoIndex]);
     return res.status(200).json({
       message: "Todo updated successfully",
     });
@@ -275,34 +275,32 @@ userRouter.put("/updatetodo", async (req, res) => {
   }
 });
 
-// update task to inprogress
-userRouter.put("/moveToInprogress", async (req, res) => {
-  const { userID, isCompleted } = req.body;
+userRouter.post("/markasdone", async (req, res) => {
+  const { isCompleted, userID, todoID } = req.body;
 
+  if (!isCompleted == undefined || !userID || !todoID) {
+    return res.status(400).json({
+      message: "All fields are mandatory",
+    });
+  }
   try {
-    if (!userID || !isCompleted == undefined) {
-      return res.status(400).json({
-        message: "All fields are mandatory",
-      });
-    }
     const findTodo = await userModel.findOne({ userID });
     if (findTodo.todos.length == 0) {
       return res.status(400).json({
-        message: "No todo found || Please Add Todos",
+        message: "No todo found || Please add todo",
       });
     }
     const todoIndex = findTodo.todos.findIndex((todo) => todo._id == todoID);
-    console.log("Todo Index", todoIndex);
     if (todoIndex === -1) {
       return res.status(404).json({
-        message: "Todo not found",
+        message: "Todo Not found",
       });
     }
     if (isCompleted !== undefined)
       findTodo.todos[todoIndex].isCompleted = isCompleted;
+
     await findTodo.save();
 
-    console.log(findTodo.todos[todoIndex]);
     return res.status(200).json({
       message: "Todo updated successfully",
     });
@@ -313,6 +311,7 @@ userRouter.put("/moveToInprogress", async (req, res) => {
     });
   }
 });
+
 module.exports = {
   userRouter: userRouter,
 };

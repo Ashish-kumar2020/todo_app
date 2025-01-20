@@ -18,6 +18,8 @@ const Backlog = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [tasks, setTasks] = useState([]);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [todoID, setTodoID] = useState();
 
   const handleTaskOpening = (task) => {
     setSelectedTask(task);
@@ -58,8 +60,28 @@ const Backlog = () => {
     fetchTodos();
   }, []);
 
-  const handleMoveTask = () => {
+  const handleMoveTask = async () => {
+    setIsCompleted(true);
     console.log("task Status updated to Inprogress");
+    const userID = localStorage.getItem("userID");
+    const data = {
+      userID: userID,
+      isCompleted: isCompleted,
+      todoID: selectedTask._id,
+    };
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/user/markasdone",
+      data,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (response.data) {
+      console.log("done");
+      fetchTodos();
+      setOpenDialog(false);
+      setSelectedTask(null);
+    }
   };
   return (
     <div>
@@ -125,7 +147,7 @@ const Backlog = () => {
                 color="primary"
                 onClick={handleMoveTask}
               >
-                Move to InProgress
+                Mark as Done
               </Button>
               <Button onClick={handleClose}>Close</Button>
             </DialogActions>
